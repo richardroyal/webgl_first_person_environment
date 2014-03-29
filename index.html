@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebGL First Person Environment Loaded from JSON</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  
+  <script type="text/javascript" src="assets/js/glMatrix-0.9.5.min.js"></script>
+  <script type="text/javascript" src="assets/js/webgl-utils.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="all" />
+  
+  <script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vColor;
+
+    void main(void) {
+        gl_FragColor = vColor;
+    }
+  </script>
+
+  <script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec4 aVertexColor;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec4 vColor;
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
+    }
+  </script>
+
+
+  
+  <script>
+    var gl;
+    var worldVertexBuffer = []
+    var worldColorBuffer = []
+  </script>
+  
+  <script src="assets/js/webgl-setup.js"></script>
+  <script src="assets/js/load-world.js"></script>
+  <script src="assets/js/controls.js"></script>
+  <script src="assets/js/draw-scene.js"></script>
+  <script src="assets/js/animate.js"></script>
+  <script src="assets/js/sim.js"></script>
+
+</head>
+<body onload="webGLStart();">
+
+  <div class="content" style="width:900px;margin:auto">
+
+    <canvas id="sim" style="border: none; margin:auto" width="900" height="500"></canvas>
+
+    <div id="loadingtext">Loading world...</div>
+    <br/>
+    <p>Use the cursor keys or WASD to run around, and <code>Page Up</code>/<code>Page Down</code> to look up and down.</p>
+
+  </div>
+
+</body>
+
+</html>
